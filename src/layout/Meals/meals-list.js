@@ -1,3 +1,4 @@
+import Card from "components/Card";
 import classes from "./meals-list.module.css";
 
 const DUMMY_MEALS = [
@@ -34,7 +35,9 @@ function MealsList(props) {
 
   return (
     <section className={classes.meals}>
-      <ul>{mealsListJSX}</ul>
+      <Card>
+        <ul>{mealsListJSX}</ul>
+      </Card>
     </section>
   );
 }
