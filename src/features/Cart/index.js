@@ -1,3 +1,4 @@
+import Modal from "components/Modal";
 import classes from "./cart.module.css";
 
 function Cart(props) {
@@ -6,17 +7,17 @@ function Cart(props) {
   );
 
   return (
-    <div>
+    <Modal>
       <ul className={classes["cart-items"]}>{cartItems}</ul>
       <div className={classes.total}>
         <span>toal amount</span>
         <span>99.99</span>
       </div>
-      <div className={classes.action}>
+      <div className={classes.actions}>
         <button className={classes["button--alt"]}>Close</button>
         <button className={classes.button}>Order</button>
       </div>
-    </div>
+    </Modal>
   );
 }
 
