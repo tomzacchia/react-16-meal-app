@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import Header from "layout/Header";
-import Meals from "layout/Meals";
+import Header from "features/Header";
+import Meals from "features/Meals";
 
 function App() {
   return (
