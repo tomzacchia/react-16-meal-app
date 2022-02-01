@@ -1,4 +1,5 @@
 import Card from "components/Card";
+import MealItem from "./meal-item";
 import classes from "./meals-list.module.css";
 
 const DUMMY_MEALS = [
@@ -30,7 +31,12 @@ const DUMMY_MEALS = [
 
 function MealsList(props) {
   const mealsListJSX = DUMMY_MEALS.map((meal, index) => (
-    <li key={index}>{meal.name}</li>
+    <MealItem
+      key={index}
+      description={meal.description}
+      name={meal.name}
+      price={meal.price}
+    />
   ));
 
   return (
