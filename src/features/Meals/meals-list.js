@@ -33,6 +33,7 @@ function MealsList(props) {
   const mealsListJSX = DUMMY_MEALS.map((meal, index) => (
     <MealItem
       key={index}
+      id={meal.id}
       description={meal.description}
       name={meal.name}
       price={meal.price}
