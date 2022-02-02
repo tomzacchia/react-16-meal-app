@@ -20,7 +20,7 @@ const REMOVE = "REMOVE";
 function cartReducer(state, action) {
   switch (action.type) {
     case ADD:
-      const { item } = action.payload;
+      const item = action.payload;
       const updatedItems = state.items.concat(item);
       const totalAmount = updatedItems.reduce(
         (acc, item) => acc + item.amount * item.price,
