@@ -10,9 +10,13 @@ function Cart(props) {
   const totalAmount = `$${cartContext.totalAmount.toFixed(2)}`;
   const hasItems = cartContext.items.length > 0;
 
-  function cartItemRemoveHandler(id) {}
+  function cartItemRemoveHandler(id) {
+    cartContext.removeItem(id);
+  }
 
-  function cartItemAddHandler(id) {}
+  function cartItemAddHandler(item) {
+    cartContext.addItem({ ...item, amount: 1 });
+  }
 
   const cartItems = cartContext.items.map((item) => (
     <CartItem
