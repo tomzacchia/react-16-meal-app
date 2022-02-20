@@ -2,30 +2,24 @@ import { useEffect, useState } from "react";
 import Card from "components/Card";
 import MealItem from "./meal-item";
 import classes from "./meals-list.module.css";
-import { get } from "firebase/database";
-import { dbMealsRef } from "utils/firebase";
+import { getMeals } from "utils/http-utilities";
 
 function MealsList(props) {
   const [meals, setMeals] = useState([]);
-
-  const getMeals = async () => {
-    try {
-      const snapshot = await get(dbMealsRef);
-      const mealsCollection = snapshot.val();
-
-      const meals = Object.entries(mealsCollection).map(([id, data]) => ({
-        id: id,
-        ...data,
-      }));
-      setMeals(meals);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getMeals();
-  });
+    getMeals()
+      .then((meals) => {
+        setIsLoading(false);
+        setMeals(meals);
+        // TODO: error handling
+      })
+      .catch((error) => {
+        setMeals([]);
+        console.log(error);
+      });
+  }, []);
 
   const mealsListJSX = meals.map((meal, index) => (
     <MealItem
@@ -39,9 +33,7 @@ function MealsList(props) {
 
   return (
     <section className={classes.meals}>
-      <Card>
-        <ul>{mealsListJSX}</ul>
-      </Card>
+      <Card>{isLoading ? <p>is loading....</p> : <ul>{mealsListJSX}</ul>}</Card>
     </section>
   );
 }
