@@ -1,36 +1,33 @@
+import { useEffect, useState } from "react";
 import Card from "components/Card";
 import MealItem from "./meal-item";
 import classes from "./meals-list.module.css";
-
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
+import { get } from "firebase/database";
+import { dbMealsRef } from "utils/firebase";
 
 function MealsList(props) {
-  const mealsListJSX = DUMMY_MEALS.map((meal, index) => (
+  const [meals, setMeals] = useState([]);
+
+  const getMeals = async () => {
+    try {
+      const snapshot = await get(dbMealsRef);
+      const mealsCollection = snapshot.val();
+
+      const meals = Object.entries(mealsCollection).map(([id, data]) => ({
+        id: id,
+        ...data,
+      }));
+      setMeals(meals);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getMeals();
+  });
+
+  const mealsListJSX = meals.map((meal, index) => (
     <MealItem
       key={index}
       id={meal.id}
